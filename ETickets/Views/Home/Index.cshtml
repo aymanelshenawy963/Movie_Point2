@@ -1,0 +1,82 @@
+﻿  @model List<Movie>
+ <div class="row">
+    @foreach (var items in Model)
+    {
+        <div class="col-12 col-md-6 mb-4 d-flex">
+            <div class="card" style="width: 100%;">
+                <div class="card-header text-center">
+                    <h5 class="card-title">@items.Name</h5>
+                </div>
+
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="~/images/movies/@items.ImgUrl" class="card-img" alt="Image of @items.Name" style="max-height: 250px; object-fit: cover;">
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p class="card-text">
+                                Price:
+                                <span style="color: darkred; background-color: lightgray; padding: 5px 10px; border-radius: 5px;">
+                                    @items.Price
+                                </span>
+                            </p>
+
+                            <p class="card-text">Cinema: @items.Cinema.Name</p>
+                            <p class="card-text">Start Date: @items.StartDate.ToShortDateString()</p>
+                            <p class="card-text">End Date: @items.EndDate.ToShortDateString()</p>
+                            <p>
+                                Category:
+                                <a href="/Category/Details?categoryName=@items.Category.Name">@items.Category.Name</a>
+                            </p>
+
+                            <div>
+                                @if (items.MovieStatus.ToString() == "Avialable")
+                                {
+                                    <p>
+                                        Movie Status:
+                                        <a class="btn btn-primary">
+                                            @items.MovieStatus
+                                        </a>
+                                    </p>
+                                }
+                                else if (items.MovieStatus.ToString() == "Expired")
+                                {
+                                    <p>
+                                        Movie Status:  <a class="btn btn-danger">
+                                            @items.MovieStatus
+                                        </a>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>
+                                        Movie Status:  <a class="btn btn-secondary">
+                                            @items.MovieStatus
+                                        </a>
+                                    </p>
+                                }
+                            </div>
+                            <br />
+                            <div>
+                                <a href="/Home/Details?movieId=@items.Id" class="btn btn-outline-secondary">More Details</a>
+
+                                @if (items.MovieStatus.ToString() == "Expired")
+                                {
+                                    <a class="btn btn-secondary">Book Ticket</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-success">Book Ticket</a>
+                                }
+                            </div>
+                        </div> <!-- Closing div.card-body -->
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    }
+</div> 
+
+
+

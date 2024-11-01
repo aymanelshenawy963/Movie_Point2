@@ -1,0 +1,45 @@
+﻿﻿
+
+<h1>Categories</h1>
+
+
+
+<div class="row">
+
+    @foreach (var items in Model)
+    {
+        <div class="col-12 col-md-6 mb-4 d-flex">
+            <div class="card" style="width: 100%;">
+                <div class="card-header text-center">
+                    <h5 class="card-title">@items.Name</h5>
+                </div>
+
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="~/images/movies/@items.ImgUrl" class="card-img" alt="Image of @items.Name" style="max-height: 250px; object-fit: cover;">
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p class="card-text">
+                                Price:
+                                <span style="color: darkred; background-color: lightgray; padding: 5px 10px; border-radius: 5px;">
+                                    @items.Price
+                                </span>
+                            </p>
+                            <p class="card-text">Cinema: @items.Cinema.Name</p>
+                            <p class="card-text">Start Date: @items.StartDate.ToShortDateString()</p>
+                            <p class="card-text">End Date: @items.EndDate.ToShortDateString()</p>
+                            <p class="card-text">Category: @items.Category.Name</p>
+                            <p class="card-text">Movie Status: @items.MovieStatus</p>
+
+                            <div>
+                                <button class="btn btn-success">Book Ticket</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

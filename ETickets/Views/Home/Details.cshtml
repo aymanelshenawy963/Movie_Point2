@@ -1,0 +1,83 @@
+﻿@model Movie
+<div>
+    @if (Model.MovieStatus.ToString() == "Avialable")
+    {
+        <a class="btn btn-primary">
+            @Model.MovieStatus
+        </a>
+    }
+    else if (Model.MovieStatus.ToString() == "Expired")
+    {
+        <a class="btn btn-danger">
+            @Model.MovieStatus
+        </a>
+    }
+    else
+    {
+        <a class="btn btn-secondary">
+            @Model.MovieStatus
+        </a>
+
+    }
+    </br>
+
+    <h1>Details @Model.Name</h1>
+</div>
+
+<div class="row">
+    <div class="col-12 mb-4 d-flex">
+        <div class="card" style="width: 100%;">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="~/images/movies/@Model.ImgUrl" class="card-img" alt="Image of @Model.Name" style="width: 450px; height: 600px; object-fit: cover;">
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">@Model.Description</p>
+                        <p class="card-text">
+                            Price:
+                            <span style="color: darkred; background-color: lightgray; padding: 5px 10px; border-radius: 5px;">
+                                @Model.Price
+                            </span>
+                        </p>
+
+                        <p class="card-text">Cinema: @Model.Cinema.Name</p>
+                        <p class="card-text">Start Date: @Model.StartDate.ToShortDateString()</p>
+                        <p class="card-text">End Date: @Model.EndDate.ToShortDateString()</p>
+                        <p class="card-text">Category: @Model.Category.Name</p>
+                        <p>Actors:</p>
+
+                        @foreach (var items in ViewBag.actors)
+                        {
+                            <a href="/Actor/Index?actorId=@items.Id">
+                                <img src="~/images/cast/@items.ProfilePicture" alt="Actor Image" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                            </a>
+                        }
+
+
+
+                  
+
+
+                        <p>Trailer:</p>
+                        <video controls>
+                            <source src="@Model.TrailerUrl" type="video/mp4">
+                        </video></br></br>
+
+                        <div>
+                            @if (Model.MovieStatus.ToString() == "Expired")
+                            {
+                                <a class="btn btn-secondary"> Book Ticket  </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success"> Book Ticket </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

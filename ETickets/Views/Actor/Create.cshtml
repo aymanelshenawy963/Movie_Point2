@@ -1,0 +1,68 @@
+﻿@model Actor
+
+<h1>Create</h1>
+
+<h4>Actor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <!-- Added enctype -->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Bio" class="control-label"></label>
+                <textarea asp-for="Bio" class="form-control"></textarea>
+                <span asp-validation-for="Bio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Upload Profile Picture</label> <!-- Changed asp-for to label directly -->
+                <input type="file" name="ProfilePicture" class="form-control" accept="image/*" onchange="previewLogo(event)" /> <!-- Ensure name matches the parameter in the controller -->
+                <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <img id="logoPreview" src="#" alt="Logo Preview" style="display:none; max-height: 150px;" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="News" class="control-label"></label>
+                <input asp-for="News" class="form-control" />
+                <span asp-validation-for="News" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    function previewLogo(event) {
+        const output = document.getElementById('logoPreview');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.style.display = 'block';
+    }
+</script>
