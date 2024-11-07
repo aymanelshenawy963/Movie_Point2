@@ -17,7 +17,7 @@ namespace ETickets.Repository
         }
 
         // CRUD
-        public IEnumerable<T> GetAll(Expression<Func<T, object>>[]? inculdeProp = null, Expression<Func<T, bool>>? expression = null, bool tracked = true)
+        public IQueryable<T> GetAll(Expression<Func<T, object>>[]? inculdeProp = null, Expression<Func<T, bool>>? expression = null, bool tracked = true)
         {
             IQueryable<T> query = dbSet;
 
@@ -34,7 +34,7 @@ namespace ETickets.Repository
             {
                 query = query.Where(expression);
             }
-            if (tracked)
+            if (!tracked)
             {
                 query = query.AsNoTracking();
             }
@@ -62,5 +62,6 @@ namespace ETickets.Repository
         {
             dbContext.SaveChanges();
         }
+
     }
 }

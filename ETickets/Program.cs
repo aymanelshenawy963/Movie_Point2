@@ -4,6 +4,8 @@ using ETickets.Repository;
 using Microsoft.EntityFrameworkCore;
 using ETickets.Models;
 using Microsoft.AspNetCore.Identity;
+using ETickets.Utiltiy;
+using Stripe;
 
 namespace ETickets
 {
@@ -29,7 +31,9 @@ namespace ETickets
             builder.Services.AddScoped<IActorRepository, ActorRepository>();
             builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
             builder.Services.AddScoped<IActorMovieRepository, ActorMovieRepository>();
-
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

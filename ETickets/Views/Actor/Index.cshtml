@@ -6,7 +6,16 @@
         <div class="mb-3 text-end">
             <a class="btn btn-primary" asp-action="Create">Create New</a>
         </div>
-
+        <form action="/Actor/Index">
+            <div class="row">
+                <div class=" col-3">
+                    <input type="search" class="form-control" placeholder="Search.." name="search" />
+                </div>
+                <div class=" col-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form></br>
         <table class="table table-striped table-bordered table-hover">
             <thead class="table-dark">
                 <tr>
@@ -46,6 +55,27 @@
         </table>
     </div>
 </div>
+
+
+<nav aria-label="Page navigation example">
+    <p>Page @ViewBag.CurrentPage of @ViewBag.actor</p>
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.CurrentPage <= 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", "Actor", new { page = ViewBag.CurrentPage - 1 })">Previous</a>
+        </li>
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", "Actor", new { page = i })">@i</a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.CurrentPage >= ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", "Actor", new { page = ViewBag.CurrentPage + 1 })">Next</a>
+        </li>
+    </ul>
+</nav>
+
+
 
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

@@ -19,10 +19,38 @@ namespace ETickets.Controllers
             this.movieRepository = movieRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? search = null,int page = 1)
         {
-            var categories = categoryRepository.GetAll().ToList();
-            return View(categories);
+            ViewBag.CurrentPage=page;   
+            ViewBag.category = categoryRepository.GetAll().Count()/5;
+            if (ViewBag.category % 5 == 0)
+            {
+                ViewBag.category = (int)categoryRepository.GetAll().Count()/5;
+
+            }
+            else
+            {
+                ViewBag.category = ((int)categoryRepository.GetAll().Count()/5)+1;
+
+            }
+            if(page<=0)
+                page = 1;
+            var categories = categoryRepository.GetAll();
+
+            if (search != null)
+            {
+                search.TrimStart();
+                search.TrimEnd();
+                categories = categories.Where(e => e.Name.Contains(search));
+
+            }
+            categories = categories.Skip((page - 1) * 5).Take(5);
+            if (categories.Any())
+            {
+                return View(categories);
+            }
+            return RedirectToAction("NotFoundPage", "Home");
+
         }
         public IActionResult Details(String categoryName)
         {

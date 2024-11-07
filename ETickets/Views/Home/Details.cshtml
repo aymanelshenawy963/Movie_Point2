@@ -56,10 +56,6 @@
                         }
 
 
-
-                  
-
-
                         <p>Trailer:</p>
                         <video controls>
                             <source src="@Model.TrailerUrl" type="video/mp4">
@@ -75,6 +71,18 @@
                                 <a class="btn btn-success"> Book Ticket </a>
                             }
                         </div>
+                        <form action="/Cart/AddToCart">
+                            <div class="row mb-3d-flex justify-content-end">
+                                <input type="hidden" name="movieId" value="@Model.Id" />
+                                <div class="col-2">
+                                    <input type="number" placeholder="Count.." class="form-control" name="count" />
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" class="btn btn-primary">Add To Cart</button>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>

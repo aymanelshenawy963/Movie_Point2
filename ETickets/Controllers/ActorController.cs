@@ -15,10 +15,37 @@ namespace ETickets.Controllers
         {
             this.actorRepository = actorRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page=1,string? search=null)
         {
-            var actors=actorRepository.GetAll();
+            ViewBag.actor = actorRepository.GetAll().Count() / 7;
+
+
+            if (ViewBag.actor % 7 == 0)
+            {
+                ViewBag.actor = (int)actorRepository.GetAll().Count() / 7;
+            }
+            else
+            {
+                ViewBag.actor = ((int)actorRepository.GetAll().Count() / 7)+1;
+            }
+            ViewBag.CurrentPage = page;
+            if (page<=0)
+                page=1;
+
+            var actors = actorRepository.GetAll();
+
+            if (search != null)
+            {
+                search.TrimStart();
+                search.TrimEnd();
+                actors = actors.Where(e => e.FirstName.Contains(search) || e.LastName.Contains(search));
+
+            }
+             actors = actors.Skip((page - 1) * 7).Take(7);
+
+            if(actors.Any())
             return View(actors);
+            return RedirectToAction("NotFoundPage","Home");
         }
  
 
